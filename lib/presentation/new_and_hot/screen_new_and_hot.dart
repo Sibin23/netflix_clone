@@ -1,11 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:netflix_clone/core/colors/colors.dart';
+import 'package:netflix_clone/application/controller/controller/new_and_hot/new_and_hot.dart';
+import 'package:netflix_clone/application/controller/controller/trending_now/trending_now.dart';
+import 'package:netflix_clone/core/colors.dart';
 import 'package:netflix_clone/core/constants.dart';
+import 'package:netflix_clone/core/strings.dart';
+import 'package:netflix_clone/application/models/new_and_hot/new_and_hot.dart';
+import 'package:netflix_clone/application/models/trending_now/trending_now.dart';
 import 'package:netflix_clone/presentation/new_and_hot/widgets/coming_soon_widget.dart';
 import 'package:netflix_clone/presentation/new_and_hot/widgets/everyones_watching_widget.dart';
 
-class ScreenNewAndHot extends StatelessWidget {
+class ScreenNewAndHot extends StatefulWidget {
   const ScreenNewAndHot({super.key});
+
+  @override
+  State<ScreenNewAndHot> createState() => _ScreenNewAndHotState();
+}
+
+class _ScreenNewAndHotState extends State<ScreenNewAndHot> {
+  List<NewAndHot> popular = [];
+  List<TrendingNow> trendingNow = [];
+  Future getMovies() async {
+    popular = await getNewAndHotMovies();
+    trendingNow = await getTrendingNowMovies();
+  }
+
+  @override
+  void initState() {
+    getMovies();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,14 +86,21 @@ class ScreenNewAndHot extends StatelessWidget {
   Widget _buildComingSoon() {
     return ListView.builder(
         itemCount: 10,
-        itemBuilder: (context, index) => const ComingSoonWidget());
+        itemBuilder: (context, index) => ComingSoonWidget(
+              image: popular[index].imagePath,
+              title: popular[index].title,
+              releaseDate: popular[index].releaseDate,
+              overview: popular[index].overview,
+            ));
   }
 
   Widget _buildEveryonesWatching() {
     return ListView.builder(
-      itemCount: 10,
-      itemBuilder: (context,index)=> const EveryonesWatchingWidget());
+        itemCount: 10,
+        itemBuilder: (context, index) => EveryonesWatchingWidget(
+              image: baseUrl + trendingNow[index].imagePath,
+              title: trendingNow[index].title,
+              overview: trendingNow[index].overview,
+            ));
   }
 }
-
-

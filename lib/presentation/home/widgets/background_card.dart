@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:netflix_clone/core/colors/colors.dart';
+import 'package:netflix_clone/core/colors.dart';
 import 'package:netflix_clone/presentation/home/widgets/custom_button_widget.dart';
 
 class BackgroundCard extends StatelessWidget {
@@ -15,7 +15,9 @@ class BackgroundCard extends StatelessWidget {
           decoration: const BoxDecoration(
               image: DecorationImage(
                   image: NetworkImage(
-                      'https://images.hdqwalls.com/download/stranger-things-season-5-uw-1280x2120.jpg'),
+                    'https://30namachi51.top/wp-content/uploads/2023/08/tt4495098.jpg',
+                     // 'https://images.hdqwalls.com/download/stranger-things-season-5-uw-1280x2120.jpg',
+                      ),
                   fit: BoxFit.cover,
                   filterQuality: FilterQuality.high)),
         ),

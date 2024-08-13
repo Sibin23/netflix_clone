@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/core/constants.dart';
+import 'package:netflix_clone/application/models/popular/popular.dart';
 import 'package:netflix_clone/presentation/home/widgets/number_card.dart';
 import 'package:netflix_clone/presentation/widgets/main_title.dart';
 
 class NumberTitleCard extends StatelessWidget {
   const NumberTitleCard({
-    super.key,
+    super.key, required this.popular,
   });
+  final List<Popular> popular;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class NumberTitleCard extends StatelessWidget {
           child: ListView(
               scrollDirection: Axis.horizontal,
               children:
-                  List.generate(10, (index) =>  NumberCard(index: index,))),
+                  List.generate(10, (index) =>  NumberCard(index: index,image: popular[index].imagePath,))),
         )
       ],
     );

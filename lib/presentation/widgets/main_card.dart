@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/core/constants.dart';
+import 'package:netflix_clone/core/strings.dart';
 
 class MainCard extends StatelessWidget {
   const MainCard({
@@ -17,7 +18,7 @@ class MainCard extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: radius10,
           image:
-              DecorationImage(image: NetworkImage(image), fit: BoxFit.cover)),
+              DecorationImage(image: NetworkImage(baseUrl + image), fit: BoxFit.cover)),
     );
   }
 }

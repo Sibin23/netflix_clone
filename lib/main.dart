@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:netflix_clone/core/colors/colors.dart';
+import 'package:netflix_clone/core/colors.dart';
 import 'package:netflix_clone/presentation/main_page/screen_main_page.dart';
 
 void main() {
@@ -15,11 +15,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Netflix',
       theme: ThemeData(
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
             foregroundColor: Colors.white, backgroundColor: Colors.transparent),
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
             bodyMedium: TextStyle(color: Colors.white),
-            bodyLarge: const TextStyle(color: Colors.white)),
+            bodyLarge: TextStyle(color: Colors.white)),
         scaffoldBackgroundColor: backgroundColor,
         colorScheme: ColorScheme.fromSeed(
             seedColor: Colors.white, background: backgroundColor),

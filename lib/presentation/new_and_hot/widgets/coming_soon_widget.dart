@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:netflix_clone/core/colors/colors.dart';
+import 'package:netflix_clone/core/colors.dart';
 import 'package:netflix_clone/core/constants.dart';
+import 'package:netflix_clone/core/strings.dart';
 import 'package:netflix_clone/presentation/home/widgets/custom_button_widget.dart';
 import 'package:netflix_clone/presentation/widgets/video_widget.dart';
 
 class ComingSoonWidget extends StatelessWidget {
   const ComingSoonWidget({
     super.key,
+    required this.image,
+    required this.title,
+    required this.releaseDate,
+    required this.overview,
   });
+  final String image;
+  final String title;
+  final String releaseDate;
+  final String overview;
 
   @override
   Widget build(BuildContext context) {
@@ -37,28 +46,26 @@ class ComingSoonWidget extends StatelessWidget {
         SizedBox(
           width: size.width - 50,
           height: 450,
-          child: const Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              VideoWidget(
-                  image:
-                      'https://wallpapers.com/images/hd/hd-white-walker-of-game-of-thrones-us0p9v0u09ihq7d7.webp'),
+              VideoWidget(image: baseUrl + image),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
                     width: 170,
                     child: Text(
-                      'Game Of Thrones',
-                      style: TextStyle(
+                      title,
+                      style: const TextStyle(
                           letterSpacing: -3,
                           fontSize: 35,
                           fontWeight: FontWeight.bold,
                           overflow: TextOverflow.ellipsis),
                     ),
                   ),
-                  Spacer(),
-                  Row(
+                  const Spacer(),
+                  const Row(
                     children: [
                       CustomButtonWidget(
                         icon: Icons.notifications_none_rounded,
@@ -79,14 +86,19 @@ class ComingSoonWidget extends StatelessWidget {
                 ],
               ),
               h10,
-              Text('Coming on Friday'),
+              Text(releaseDate),
               h10,
-              Text('Game of Thrones',
+              Text(title,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               h10,
-              Text(
-                'Landing the lead in the school musical is a dream come true for Jodi, until the pressure sends her confidence--and her relationship--into a tailspin.',
-                style: TextStyle(color: greyColor),
+              SizedBox(
+                width: size.width,
+                height: 110,
+                child: Text(
+                  overview,
+                  style: const TextStyle(
+                      color: greyColor, overflow: TextOverflow.visible),
+                ),
               )
             ],
           ),

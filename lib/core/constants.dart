@@ -12,3 +12,7 @@ final BorderRadius radius30 = BorderRadius.circular(30);
 // TextStyle
 TextStyle homeTitleText =
     const TextStyle(fontSize: 15, fontWeight: FontWeight.bold);
+
+
+const getUrl =
+    'https://api.themoviedb.org/3/trending/movie/day?api_key=57563281add6829306d5731ac243b3fa';

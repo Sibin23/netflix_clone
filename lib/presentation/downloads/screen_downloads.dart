@@ -1,9 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:netflix_clone/core/colors/colors.dart';
+import 'package:netflix_clone/core/colors.dart';
 import 'package:netflix_clone/core/constants.dart';
+import 'package:netflix_clone/presentation/downloads/widgets/downloads_image_widget.dart';
 import 'package:netflix_clone/presentation/widgets/app_bar_widget.dart';
 
 class ScreenDownloads extends StatelessWidget {
@@ -19,7 +18,7 @@ class ScreenDownloads extends StatelessWidget {
             )),
         body: SafeArea(
             child: ListView.separated(
-              padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           itemCount: _widgetList.length,
           itemBuilder: (context, index) => _widgetList[index],
           separatorBuilder: (context, index) => h20,
@@ -28,9 +27,7 @@ class ScreenDownloads extends StatelessWidget {
 }
 
 class _SmartDownloads extends StatelessWidget {
-  const _SmartDownloads({
-    super.key
-  });
+  const _SmartDownloads({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +36,11 @@ class _SmartDownloads extends StatelessWidget {
         w10,
         Icon(Icons.settings, color: whiteColor),
         w10,
-        Text('Smart Downloads',style: TextStyle(color: whiteColor,fontSize: 18,fontWeight: FontWeight.bold),)
+        Text(
+          'Smart Downloads',
+          style: TextStyle(
+              color: whiteColor, fontSize: 18, fontWeight: FontWeight.bold),
+        )
       ],
     );
   }
@@ -55,6 +56,7 @@ class Section2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+
     return Column(children: [
       const Text(
         'Introducing Downloads for you',
@@ -144,40 +146,6 @@ class Section3 extends StatelessWidget {
           ),
         )
       ],
-    );
-  }
-}
-
-class DownloadsImageWidget extends StatelessWidget {
-  const DownloadsImageWidget({
-    super.key,
-    this.angle = 0,
-    required this.image,
-    required this.margin,
-    required this.size,
-  });
-
-  final double angle;
-  final String image;
-  final EdgeInsets margin;
-  final Size size;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: margin,
-      child: Transform.rotate(
-        angle: angle * pi / 180,
-        child: Container(
-         
-          width: size.width,
-          height: size.height,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              image:
-                  DecorationImage(image: NetworkImage(image), fit: BoxFit.cover)),
-        ),
-      ),
     );
   }
 }

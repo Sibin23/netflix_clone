@@ -1,11 +1,13 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
-import 'package:netflix_clone/core/colors/colors.dart';
+import 'package:netflix_clone/core/colors.dart';
 import 'package:netflix_clone/core/constants.dart';
+import 'package:netflix_clone/core/strings.dart';
 
 class NumberCard extends StatelessWidget {
-  const NumberCard({super.key, required this.index});
+  const NumberCard({super.key, required this.index, required this.image});
   final int index;
+  final String image;
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +25,8 @@ class NumberCard extends StatelessWidget {
               height: 200,
               decoration: BoxDecoration(
                   borderRadius: radius10,
-                  image: const DecorationImage(
-                      image: NetworkImage(
-                          'https://www.thewestdale.ca/wp-content/uploads/2024/02/westdale_oppenheimer.jpg'),
+                  image:  DecorationImage(
+                      image: NetworkImage(baseUrl + image),
                       fit: BoxFit.cover)),
             ),
           ],

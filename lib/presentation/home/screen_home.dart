@@ -1,15 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:netflix_clone/core/colors/colors.dart';
+import 'package:netflix_clone/application/controller/controller/popular/popular.dart';
+import 'package:netflix_clone/application/controller/controller/tensed_drama/tensed_drama.dart';
+import 'package:netflix_clone/application/controller/controller/trending_now/trending_now.dart';
+import 'package:netflix_clone/core/colors.dart';
 import 'package:netflix_clone/core/constants.dart';
+import 'package:netflix_clone/application/models/popular/popular.dart';
+import 'package:netflix_clone/application/models/tensed_drama/tensed_drama.dart';
+import 'package:netflix_clone/application/models/trending_now/trending_now.dart';
 import 'package:netflix_clone/presentation/home/widgets/background_card.dart';
 import 'package:netflix_clone/presentation/home/widgets/number_title_card.dart';
 import 'package:netflix_clone/presentation/widgets/main_title_card.dart';
 
+import '../../application/controller/controller/top_rated/top_rated.dart';
+import '../../application/models/top_rated/top_rated.dart';
+
 ValueNotifier<bool> scrollnotifier = ValueNotifier(true);
 
-class ScreenHome extends StatelessWidget {
+class ScreenHome extends StatefulWidget {
   const ScreenHome({super.key});
+
+  @override
+  State<ScreenHome> createState() => _ScreenHomeState();
+}
+
+class _ScreenHomeState extends State<ScreenHome> {
+  List<TopRated> toprated = [];
+  List<Popular> popular = [];
+  List<TensedDrama> tensedDrama = [];
+  List<String> newplaying = [];
+  List<TrendingNow> trendingNow = [];
+  Future<void> getAllMovies() async {
+    toprated = await getTopRatedMovies();
+    trendingNow = await getTrendingNowMovies();
+    popular = await getPopularMovies();
+    tensedDrama = await getTensedDramaMovies();
+  }
+
+  @override
+  void initState() {
+    getAllMovies();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,33 +63,26 @@ class ScreenHome extends StatelessWidget {
                 child: Stack(
                   children: [
                     ListView(
-                      children: const [
-                        BackgroundCard(),
-                        MainTitleCard(
-                          title: 'Released in the past year',
-                          imageUrl:
-                              'https://resizing.flixster.com/hX6w5BAFk2uRflKaoB0e0riPDsc=/206x305/v2/https://resizing.flixster.com/mp662_hMit1v-dVNJsYDvTkxADw=/ems.cHJkLWVtcy1hc3NldHMvdHZzZWFzb24vUlRUVjgxMjU4My53ZWJw',
+                      children: [
+                        const BackgroundCard(),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: MainTitleCard(
+                              title: 'Released in the past year',
+                              imageUrl: toprated),
                         ),
                         h10,
                         MainTitleCard(
-                          title: 'Trending Now',
-                          imageUrl:
-                              'https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/kingdom-of-the-planet-of-the-apes-et00374973-1699000754.jpg',
-                        ),
+                            title: 'Trending Now', imageUrl: trendingNow),
+                        
                         h10,
-                        NumberTitleCard(),
+                         NumberTitleCard(popular: popular),
                         h10,
-                        MainTitleCard(
-                          title: 'Tense Dramas',
-                          imageUrl:
-                              'https://resizing.flixster.com/4h9bnkw0DZ98nBIorGmi2F_4zpk=/206x305/v2/https://resizing.flixster.com/O_7WBKqpbx-v2vGorZoDbwV2mto=/ems.cHJkLWVtcy1hc3NldHMvdHZzZXJpZXMvYTZiZDU4MTEtMmRjYS00MDNhLWFmM2QtYjJhOTU4MGE2OTZkLmpwZw==',
-                        ),
+                        MainTitleCard(title: 'Tensed Drama', imageUrl: tensedDrama),
+                        
                         h10,
-                        MainTitleCard(
-                          title: 'South Indian Cinemas',
-                          imageUrl:
-                              'https://m.media-amazon.com/images/M/MV5BOWMyNTA2M2UtMmZkNC00ZWE5LThjZGItODcxNGU2MDBhYTk1XkEyXkFqcGdeQXVyOTU0NjY5MzM@._V1_FMjpg_UX1000_.jpg',
-                        ),
+                        MainTitleCard(title: 'South Indian Cinemas', imageUrl: toprated)
+                        // SouthIndianCinemaSection(),
                       ],
                     ),
                     scrollnotifier.value == true

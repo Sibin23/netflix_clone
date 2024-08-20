@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/application/controller/controller/new_and_hot/new_and_hot.dart';
 import 'package:netflix_clone/application/controller/controller/trending_now/trending_now.dart';
@@ -19,9 +20,31 @@ class ScreenNewAndHot extends StatefulWidget {
 class _ScreenNewAndHotState extends State<ScreenNewAndHot> {
   List<NewAndHot> popular = [];
   List<TrendingNow> trendingNow = [];
+  bool isLoading = true;
+  bool isError = false;
   Future getMovies() async {
-    popular = await getNewAndHotMovies();
-    trendingNow = await getTrendingNowMovies();
+    try {
+      List<NewAndHot> movies = await getNewAndHotMovies();
+      List<TrendingNow> trending = await getTrendingNowMovies();
+
+      if (mounted) {
+        setState(() {
+          popular = movies;
+          trendingNow = trending;
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching upcoming movies: $e');
+      }
+      if (mounted) {
+        setState(() {
+          isError = true;
+          isLoading = false;
+        });
+      }
+    }
   }
 
   @override
@@ -77,8 +100,16 @@ class _ScreenNewAndHotState extends State<ScreenNewAndHot> {
                     )
                   ]),
             )),
-        body: TabBarView(
-            children: [_buildComingSoon(), _buildEveryonesWatching()]),
+        body: isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : isError
+                ? const Center(
+                    child: Text('Error fetching Movies'),
+                  )
+                : TabBarView(
+                    children: [_buildComingSoon(), _buildEveryonesWatching()]),
       ),
     );
   }
